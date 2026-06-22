@@ -12,14 +12,13 @@
     <style>
         :root {
             --primary: #ef4444;
-            --primary-dark: #b91c1c;
-            --bg-dark: #0f172a;
-            --bg-card: rgba(30, 41, 59, 0.7);
-            --text-main: #f1f5f9;
+            --primary-glow: rgba(239, 68, 68, 0.3);
+            --bg-dark: #020617;
+            --bg-card: rgba(15, 23, 42, 0.6);
+            --text-main: #f8fafc;
             --text-dim: #94a3b8;
             --accent: #38bdf8;
-            --border: rgba(255, 255, 255, 0.1);
-            --glass: rgba(15, 23, 42, 0.8);
+            --border: rgba(255, 255, 255, 0.08);
         }
 
         * {
@@ -33,8 +32,10 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-dark);
             background-image: 
-                radial-gradient(at 0% 0%, rgba(239, 68, 68, 0.07) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.05) 0px, transparent 50%);
+                radial-gradient(circle at 50% -20%, #1e1b4b, transparent),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
             color: var(--text-main);
             line-height: 1.6;
             min-height: 100vh;
@@ -42,7 +43,7 @@
 
         /* --- Header / Hero --- */
         header {
-            padding: 100px 20px 60px;
+            padding: 120px 20px 80px;
             text-align: center;
             max-width: 1000px;
             margin: 0 auto;
@@ -53,20 +54,22 @@
             color: var(--primary);
             padding: 6px 16px;
             border-radius: 100px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
             border: 1px solid rgba(239, 68, 68, 0.2);
             display: inline-block;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         h1 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
             font-weight: 800;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            background: linear-gradient(to bottom right, #fff 50%, #94a3b8);
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 24px;
+            background: linear-gradient(to bottom, #fff 40%, #64748b);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -74,82 +77,83 @@
         .hero-desc {
             font-size: 1.25rem;
             color: var(--text-dim);
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto 40px;
         }
 
         /* --- Terminal / Playground --- */
         .playground-container {
             max-width: 900px;
-            margin: 0 auto 80px;
+            margin: 0 auto 100px;
             padding: 0 20px;
         }
 
         .terminal {
-            background: #010409;
+            background: #0b0f1a;
             border: 1px solid var(--border);
-            border-radius: 12px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 30px 60px -12px rgba(0,0,0,0.6);
             overflow: hidden;
         }
 
         .terminal-header {
-            background: #161b22;
-            padding: 12px 20px;
+            background: rgba(255,255,255,0.03);
+            padding: 14px 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
             border-bottom: 1px solid var(--border);
         }
 
+        .dots { display: flex; gap: 8px; }
         .dot { width: 12px; height: 12px; border-radius: 50%; }
         .red { background: #ff5f56; }
         .yellow { background: #ffbd2e; }
         .green { background: #27c93f; }
         
         .terminal-tab {
-            margin-left: 20px;
+            flex: 1;
+            text-align: center;
             font-family: 'Fira Code', monospace;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-dim);
+            margin-right: 40px;
         }
 
         .terminal-body {
-            padding: 24px;
+            padding: 30px;
             font-family: 'Fira Code', monospace;
-            min-height: 300px;
         }
 
         .try-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .btn-api {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border);
             color: var(--text-dim);
-            padding: 10px;
-            border-radius: 6px;
+            padding: 8px 16px;
+            border-radius: 8px;
             cursor: pointer;
-            font-family: inherit;
             font-size: 0.8rem;
-            transition: 0.2s;
+            transition: 0.3s;
         }
 
         .btn-api:hover, .btn-api.active {
-            background: rgba(239, 68, 68, 0.1);
-            border-color: var(--primary);
+            background: var(--primary);
             color: white;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
         }
 
         .url-bar {
-            background: #0d1117;
-            padding: 12px 16px;
-            border-radius: 6px;
-            margin-bottom: 20px;
+            background: #020617;
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -159,218 +163,265 @@
         .url-bar code { color: var(--accent); font-size: 0.9rem; }
 
         .response-area {
-            color: #d1d5db;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            padding: 20px;
+            color: #94a3b8;
             font-size: 0.85rem;
             white-space: pre-wrap;
             max-height: 400px;
             overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.03);
         }
 
-        /* --- Documentation Sections --- */
+        .status-line { margin-bottom: 10px; font-weight: bold; }
+        .status-200 { color: #22c55e; }
+        .status-error { color: #ef4444; }
+
+        /* --- Documentation --- */
         .content-section {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 60px 20px;
+            padding: 80px 20px;
         }
 
         .section-title {
-            font-size: 2rem;
-            margin-bottom: 40px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .section-title::after {
-            content: '';
-            height: 1px;
-            flex: 1;
-            background: var(--border);
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 50px;
+            letter-spacing: -0.02em;
         }
 
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
         }
 
         .doc-card {
             background: var(--bg-card);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             border: 1px solid var(--border);
-            padding: 30px;
-            border-radius: 16px;
-            transition: 0.3s;
+            padding: 40px;
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .doc-card:hover {
-            border-color: rgba(239, 68, 68, 0.4);
-            transform: translateY(-5px);
+            border-color: rgba(239, 68, 68, 0.3);
+            background: rgba(15, 23, 42, 0.8);
+            transform: translateY(-8px);
         }
 
         .method {
-            font-weight: 800;
-            color: var(--primary);
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-            display: block;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            margin-bottom: 16px;
+            display: inline-block;
         }
 
         .path {
             font-family: 'Fira Code', monospace;
-            background: #0f172a;
-            padding: 8px 12px;
-            border-radius: 6px;
+            background: #020617;
+            padding: 12px 16px;
+            border-radius: 10px;
             display: block;
-            margin: 10px 0;
-            color: var(--accent);
+            margin: 16px 0;
+            color: #fff;
+            border: 1px solid var(--border);
         }
 
         /* --- Footer --- */
         footer {
             border-top: 1px solid var(--border);
-            padding: 80px 20px;
+            padding: 100px 20px;
             text-align: center;
             margin-top: 100px;
-            background: rgba(0,0,0,0.2);
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-bottom: 30px;
+            gap: 40px;
+            margin-bottom: 40px;
         }
 
         .footer-links a {
             color: var(--text-dim);
             text-decoration: none;
-            transition: 0.2s;
+            transition: 0.3s;
             font-weight: 500;
         }
 
-        .footer-links a:hover { color: var(--primary); }
+        .footer-links a:hover { color: #fff; }
 
         .credit {
             color: var(--text-dim);
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
         .credit a {
             color: var(--primary);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
+            position: relative;
         }
 
+        .credit a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; left: 0; width: 0; height: 2px;
+            background: var(--primary);
+            transition: 0.3s;
+        }
+        .credit a:hover::after { width: 100%; }
+
         @media (max-width: 768px) {
-            .try-grid { grid-template-columns: 1fr 1fr; }
-            h1 { font-size: 2.5rem; }
+            .try-grid { justify-content: center; }
+            h1 { font-size: 2.8rem; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <span class="badge-new">v2.0 is now live</span>
-        <h1>API Hari Libur <span style="color: var(--primary);">Indonesia</span></h1>
-        <p class="hero-desc">Rest API sederhana, gratis, dan tanpa API Key untuk mendapatkan data hari libur nasional & cuti bersama.</p>
+        <span class="badge-new">Indonesian Holiday API</span>
+        <h1>Developer portal.</h1>
+        <p class="hero-desc">Data hari libur nasional Indonesia terlengkap. Gratis, Open Source, dan selalu up-to-date untuk kebutuhan aplikasi Anda.</p>
+        <a href="#docs" class="btn-api active" style="text-decoration: none; padding: 12px 30px;">Mulai Integrasi</a>
     </header>
 
     <div class="playground-container">
         <div class="terminal">
             <div class="terminal-header">
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
-                <div class="terminal-tab">api-playground.js</div>
+                <div class="dots">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="terminal-tab">request.sh</div>
             </div>
             <div class="terminal-body">
                 <div class="try-grid">
-                    <button class="btn-api active" data-endpoint="/api">Tahun Ini</button>
-                    <button class="btn-api" data-endpoint="/api?year=2024">Tahun 2024</button>
-                    <button class="btn-api" data-endpoint="/api?month=12">Bulan Ini</button>
-                    <button class="btn-api" data-endpoint="/api/today">Hari Ini</button>
+                    <button class="btn-api active" data-endpoint="/api">GET /all</button>
+                    <button class="btn-api" data-endpoint="/api?year=2024">GET /2024</button>
+                    <button class="btn-api" data-endpoint="/api?month=12">GET /Dec</button>
+                    <button class="btn-api" data-endpoint="/api/today">GET /today</button>
                 </div>
                 <div class="url-bar">
-                    <code id="display-url">https://domain.com/api</code>
-                    <svg width="16" height="16" fill="currentColor" style="cursor: pointer; color: var(--text-dim)" viewBox="0 0 16 16">
-                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
-                    </svg>
+                    <code id="display-url">Loading...</code>
                 </div>
-                <div class="response-area" id="response-box">// Loading response...</div>
+                <div class="response-area" id="response-box">
+                    <div class="status-line">// Ready to fetch...</div>
+                </div>
             </div>
         </div>
     </div>
 
     <section class="content-section" id="docs">
-        <h2 class="section-title">Dokumentasi</h2>
+        <h2 class="section-title">Dokumentasi API</h2>
         <div class="card-grid">
             <div class="doc-card">
                 <span class="method">GET</span>
-                <h3>Semua Libur</h3>
+                <h3>Daftar Libur</h3>
                 <code class="path">/api</code>
-                <p style="color: var(--text-dim)">Mengambil daftar lengkap hari libur di tahun yang sedang berjalan.</p>
+                <p style="color: var(--text-dim)">Mengembalikan array objek berisi seluruh tanggal merah dan cuti bersama di tahun berjalan.</p>
             </div>
             <div class="doc-card">
                 <span class="method">GET</span>
-                <h3>Filter Tahun</h3>
-                <code class="path">/api?year=2024</code>
-                <p style="color: var(--text-dim)">Gunakan query parameter 'year' untuk mengambil data tahun spesifik.</p>
+                <h3>Filter Spesifik</h3>
+                <code class="path">/api?year=2025&month=1</code>
+                <p style="color: var(--text-dim)">Mendukung query parameter untuk tahun (year) dan bulan (month) secara fleksibel.</p>
             </div>
             <div class="doc-card">
                 <span class="method">GET</span>
-                <h3>Cek Hari Ini</h3>
+                <h3>Validasi Cepat</h3>
                 <code class="path">/api/today</code>
-                <p style="color: var(--text-dim)">Boolean check untuk mengetahui apakah hari ini adalah tanggal merah.</p>
+                <p style="color: var(--text-dim)">Endpoint khusus untuk pengecekan status hari ini. Sangat berguna untuk sistem absensi.</p>
             </div>
         </div>
     </section>
 
     <footer>
         <div class="footer-links">
-            <a href="https://github.com/radyakaze/api-hari-libur">GitHub Source</a>
-            <a href="https://github.com/radyakaze/api-hari-libur/issues">Report Bug</a>
+            <a href="https://github.com/radyakaze/api-hari-libur">GitHub</a>
+            <a href="https://github.com/radyakaze/api-hari-libur/issues">Support</a>
         </div>
         <p class="credit">
-            Powered by Deno. Data provided by <a href="https://tanggalans.id/" target="_blank">Tanggalans.id</a>
+            Dikelola oleh <a href="https://github.com/radyakaze" target="_blank">Radyakaze</a>. 
+            Data oleh <a href="https://tanggalans.id/" target="_blank">Tanggalans.id</a>
         </p>
-        <p style="margin-top: 20px; font-size: 0.8rem; color: var(--text-dim);">
-            &copy; <span id="year"></span> API Hari Libur Indonesia.
+        <p style="margin-top: 24px; font-size: 0.85rem; color: var(--text-dim); opacity: 0.6;">
+            &copy; <span id="year"></span> API Hari Libur Indonesia. Licensed under MIT.
         </p>
     </footer>
 
     <script>
-        const BASE_URL = window.location.origin;
+        // 1. URL CONFIGURATION
+        // If testing locally (file://), it will try to fetch from your production URL
+        // If hosted on your server, it uses the current domain
+        const PROD_URL = "https://api-hari-libur.deno.dev"; // Ganti dengan URL API Anda jika berbeda
+        const BASE_URL = (window.location.protocol === 'file:') ? PROD_URL : window.location.origin;
+
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Logic for playground
         const btns = document.querySelectorAll('.btn-api');
         const displayUrl = document.getElementById('display-url');
         const responseBox = document.getElementById('response-box');
 
         async function fetchPreview(endpoint) {
-            responseBox.textContent = "// Mengambil data...";
+            const fullUrl = BASE_URL + endpoint;
+            displayUrl.textContent = fullUrl;
+            
+            responseBox.innerHTML = `<div class="status-line">// Fetching from ${endpoint}...</div>`;
+            
             try {
-                const res = await fetch(BASE_URL + endpoint);
+                const startTime = performance.now();
+                const res = await fetch(fullUrl);
+                const endTime = performance.now();
+                const duration = Math.round(endTime - startTime);
+
+                if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
+                
                 const data = await res.json();
-                responseBox.textContent = JSON.stringify(data, null, 2);
+                
+                responseBox.innerHTML = `
+                    <div class="status-line">
+                        <span class="status-200">● 200 OK</span> 
+                        <span style="margin-left:10px; font-weight:normal; opacity:0.5">${duration}ms</span>
+                    </div>
+                    <div>${JSON.stringify(data, null, 2)}</div>
+                `;
             } catch (e) {
-                responseBox.textContent = "// Gagal memuat data. Silakan coba lagi.";
+                responseBox.innerHTML = `
+                    <div class="status-line status-error">● Error Connection</div>
+                    <div style="color: #fca5a5">
+// Gagal memuat data.
+// Penyebab: ${e.message}
+// Pastikan API server Anda sedang berjalan di:
+// ${BASE_URL}
+                    </div>
+                `;
             }
         }
 
         btns.forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', function() {
+                // Ignore the 'Mulai Integrasi' button
+                if (this.getAttribute('href')) return;
+
                 btns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const path = btn.getAttribute('data-endpoint');
-                displayUrl.textContent = BASE_URL + path;
+                this.classList.add('active');
+                const path = this.getAttribute('data-endpoint');
                 fetchPreview(path);
             });
         });
 
-        // Init
+        // Initialize with default
         fetchPreview('/api');
     </script>
 </body>
