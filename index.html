@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Hari Libur Indonesia | Documentation</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #ef4444;
+            --primary-dark: #b91c1c;
+            --bg-dark: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --text-main: #f1f5f9;
+            --text-dim: #94a3b8;
+            --accent: #38bdf8;
+            --border: rgba(255, 255, 255, 0.1);
+            --glass: rgba(15, 23, 42, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(239, 68, 68, 0.07) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.05) 0px, transparent 50%);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* --- Header / Hero --- */
+        header {
+            padding: 100px 20px 60px;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .badge-new {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(to bottom right, #fff 50%, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.25rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* --- Terminal / Playground --- */
+        .playground-container {
+            max-width: 900px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        .terminal {
+            background: #010409;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: #161b22;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+        
+        .terminal-tab {
+            margin-left: 20px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        .terminal-body {
+            padding: 24px;
+            font-family: 'Fira Code', monospace;
+            min-height: 300px;
+        }
+
+        .try-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-api {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.8rem;
+            transition: 0.2s;
+        }
+
+        .btn-api:hover, .btn-api.active {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .url-bar {
+            background: #0d1117;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border);
+        }
+
+        .url-bar code { color: var(--accent); font-size: 0.9rem; }
+
+        .response-area {
+            color: #d1d5db;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        /* --- Documentation Sections --- */
+        .content-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            height: 1px;
+            flex: 1;
+            background: var(--border);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .doc-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 16px;
+            transition: 0.3s;
+        }
+
+        .doc-card:hover {
+            border-color: rgba(239, 68, 68, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .method {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .path {
+            font-family: 'Fira Code', monospace;
+            background: #0f172a;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: block;
+            margin: 10px 0;
+            color: var(--accent);
+        }
+
+        /* --- Footer --- */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 80px 20px;
+            text-align: center;
+            margin-top: 100px;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover { color: var(--primary); }
+
+        .credit {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        .credit a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .try-grid { grid-template-columns: 1fr 1fr; }
+            h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <span class="badge-new">v2.0 is now live</span>
+        <h1>API Hari Libur <span style="color: var(--primary);">Indonesia</span></h1>
+        <p class="hero-desc">Rest API sederhana, gratis, dan tanpa API Key untuk mendapatkan data hari libur nasional & cuti bersama.</p>
+    </header>
+
+    <div class="playground-container">
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+                <div class="terminal-tab">api-playground.js</div>
+            </div>
+            <div class="terminal-body">
+                <div class="try-grid">
+                    <button class="btn-api active" data-endpoint="/api">Tahun Ini</button>
+                    <button class="btn-api" data-endpoint="/api?year=2024">Tahun 2024</button>
+                    <button class="btn-api" data-endpoint="/api?month=12">Bulan Ini</button>
+                    <button class="btn-api" data-endpoint="/api/today">Hari Ini</button>
+                </div>
+                <div class="url-bar">
+                    <code id="display-url">https://domain.com/api</code>
+                    <svg width="16" height="16" fill="currentColor" style="cursor: pointer; color: var(--text-dim)" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                    </svg>
+                </div>
+                <div class="response-area" id="response-box">// Loading response...</div>
+            </div>
+        </div>
+    </div>
+
+    <section class="content-section" id="docs">
+        <h2 class="section-title">Dokumentasi</h2>
+        <div class="card-grid">
+            <div class="doc-card">
+                <span class="method">GET</span>
+                <h3>Semua Libur</h3>
+                <code class="path">/api</code>
+                <p style="color: var(--text-dim)">Mengambil daftar lengkap hari libur di tahun yang sedang berjalan.</p>
+            </div>
+            <div class="doc-card">
+                <span class="method">GET</span>
+                <h3>Filter Tahun</h3>
+                <code class="path">/api?year=2024</code>
+                <p style="color: var(--text-dim)">Gunakan query parameter 'year' untuk mengambil data tahun spesifik.</p>
+            </div>
+            <div class="doc-card">
+                <span class="method">GET</span>
+                <h3>Cek Hari Ini</h3>
+                <code class="path">/api/today</code>
+                <p style="color: var(--text-dim)">Boolean check untuk mengetahui apakah hari ini adalah tanggal merah.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://github.com/radyakaze/api-hari-libur">GitHub Source</a>
+            <a href="https://github.com/radyakaze/api-hari-libur/issues">Report Bug</a>
+        </div>
+        <p class="credit">
+            Powered by Deno. Data provided by <a href="https://tanggalans.id/" target="_blank">Tanggalans.id</a>
+        </p>
+        <p style="margin-top: 20px; font-size: 0.8rem; color: var(--text-dim);">
+            &copy; <span id="year"></span> API Hari Libur Indonesia.
+        </p>
+    </footer>
+
+    <script>
+        const BASE_URL = window.location.origin;
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Logic for playground
+        const btns = document.querySelectorAll('.btn-api');
+        const displayUrl = document.getElementById('display-url');
+        const responseBox = document.getElementById('response-box');
+
+        async function fetchPreview(endpoint) {
+            responseBox.textContent = "// Mengambil data...";
+            try {
+                const res = await fetch(BASE_URL + endpoint);
+                const data = await res.json();
+                responseBox.textContent = JSON.stringify(data, null, 2);
+            } catch (e) {
+                responseBox.textContent = "// Gagal memuat data. Silakan coba lagi.";
+            }
+        }
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const path = btn.getAttribute('data-endpoint');
+                displayUrl.textContent = BASE_URL + path;
+                fetchPreview(path);
+            });
+        });
+
+        // Init
+        fetchPreview('/api');
+    </script>
+</body>
+</html>
