@@ -3,426 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Hari Libur Indonesia | Documentation</title>
+    <title>Indonesian Holiday API | Developer Portal</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary: #ef4444;
-            --primary-glow: rgba(239, 68, 68, 0.3);
-            --bg-dark: #020617;
-            --bg-card: rgba(15, 23, 42, 0.6);
-            --text-main: #f8fafc;
-            --text-dim: #94a3b8;
-            --accent: #38bdf8;
+            --brand: #ff4757;
+            --brand-gradient: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
+            --bg: #050505;
+            --card: #0f0f0f;
             --border: rgba(255, 255, 255, 0.08);
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --code-bg: #000000;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-dark);
-            background-image: 
-                radial-gradient(circle at 50% -20%, #1e1b4b, transparent),
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 40px 40px, 40px 40px;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
             color: var(--text-main);
             line-height: 1.6;
-            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* --- Header / Hero --- */
+        /* Subtle Background Animation */
+        .bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% -20%, #2c1010 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        /* Navbar */
+        nav {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0; z-index: 100;
+        }
+        .logo { font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+        .logo span { background: var(--brand-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* Hero Section */
         header {
-            padding: 120px 20px 80px;
+            max-width: 1200px;
+            margin: 100px auto 60px;
+            padding: 0 20px;
             text-align: center;
-            max-width: 1000px;
-            margin: 0 auto;
         }
-
-        .badge-new {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--primary);
-            padding: 6px 16px;
-            border-radius: 100px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            border: 1px solid rgba(239, 68, 68, 0.2);
+        .announcement {
             display: inline-block;
-            margin-bottom: 24px;
+            padding: 6px 15px;
+            background: rgba(255, 71, 87, 0.1);
+            border: 1px solid rgba(255, 71, 87, 0.2);
+            border-radius: 100px;
+            color: var(--brand);
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-transform: uppercase; letter-spacing: 1px;
         }
+        h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; letter-spacing: -2px; margin-bottom: 20px; line-height: 1; }
+        .hero-desc { color: var(--text-muted); font-size: 1.2rem; max-width: 600px; margin: 0 auto 40px; }
 
-        h1 {
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
-            font-weight: 800;
-            letter-spacing: -0.04em;
-            line-height: 1;
-            margin-bottom: 24px;
-            background: linear-gradient(to bottom, #fff 40%, #64748b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-desc {
-            font-size: 1.25rem;
-            color: var(--text-dim);
-            max-width: 650px;
-            margin: 0 auto 40px;
-        }
-
-        /* --- Terminal / Playground --- */
-        .playground-container {
+        /* Playground / Terminal */
+        .playground {
             max-width: 900px;
             margin: 0 auto 100px;
             padding: 0 20px;
         }
-
-        .terminal {
-            background: #0b0f1a;
+        .window {
+            background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 30px 60px -12px rgba(0,0,0,0.6);
+            border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
         }
-
-        .terminal-header {
-            background: rgba(255,255,255,0.03);
-            padding: 14px 20px;
+        .window-header {
+            background: rgba(255,255,255,0.02);
+            padding: 15px 20px;
             display: flex;
             align-items: center;
             border-bottom: 1px solid var(--border);
         }
-
-        .dots { display: flex; gap: 8px; }
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .red { background: #ff5f56; }
-        .yellow { background: #ffbd2e; }
-        .green { background: #27c93f; }
-        
-        .terminal-tab {
+        .dots { display: flex; gap: 8px; margin-right: 20px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: #333; }
+        .address-bar {
             flex: 1;
-            text-align: center;
+            background: #000;
+            padding: 8px 15px;
+            border-radius: 6px;
             font-family: 'Fira Code', monospace;
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            margin-right: 40px;
-        }
-
-        .terminal-body {
-            padding: 30px;
-            font-family: 'Fira Code', monospace;
-        }
-
-        .try-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 24px;
-        }
-
-        .btn-api {
-            background: rgba(255, 255, 255, 0.05);
+            font-size: 13px;
+            color: var(--brand);
             border: 1px solid var(--border);
-            color: var(--text-dim);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .window-body { padding: 30px; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 25px; overflow-x: auto; padding-bottom: 5px; }
+        .tab-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
             padding: 8px 16px;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 0.8rem;
-            transition: 0.3s;
+            font-size: 13px;
+            font-weight: 500;
+            transition: 0.2s;
+            white-space: nowrap;
         }
+        .tab-btn:hover { background: rgba(255,255,255,0.05); }
+        .tab-btn.active { background: white; color: black; border-color: white; }
 
-        .btn-api:hover, .btn-api.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            box-shadow: 0 0 15px var(--primary-glow);
-        }
-
-        .url-bar {
-            background: #020617;
-            padding: 14px 18px;
-            border-radius: 10px;
-            margin-bottom: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid var(--border);
-        }
-
-        .url-bar code { color: var(--accent); font-size: 0.9rem; }
-
-        .response-area {
-            background: rgba(0,0,0,0.3);
+        .response-container {
+            background: var(--code-bg);
             border-radius: 8px;
             padding: 20px;
-            color: #94a3b8;
-            font-size: 0.85rem;
-            white-space: pre-wrap;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid rgba(255,255,255,0.03);
-        }
-
-        .status-line { margin-bottom: 10px; font-weight: bold; }
-        .status-200 { color: #22c55e; }
-        .status-error { color: #ef4444; }
-
-        /* --- Documentation --- */
-        .content-section {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 50px;
-            letter-spacing: -0.02em;
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 24px;
-        }
-
-        .doc-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
-            padding: 40px;
-            border-radius: 24px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .doc-card:hover {
-            border-color: rgba(239, 68, 68, 0.3);
-            background: rgba(15, 23, 42, 0.8);
-            transform: translateY(-8px);
-        }
-
-        .method {
-            background: rgba(56, 189, 248, 0.1);
-            color: var(--accent);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 0.75rem;
-            margin-bottom: 16px;
-            display: inline-block;
-        }
-
-        .path {
             font-family: 'Fira Code', monospace;
-            background: #020617;
-            padding: 12px 16px;
-            border-radius: 10px;
-            display: block;
-            margin: 16px 0;
-            color: #fff;
+            font-size: 14px;
+            min-height: 300px;
+            max-height: 500px;
+            overflow-y: auto;
             border: 1px solid var(--border);
         }
+        .json-key { color: #ff79c6; }
+        .json-val { color: #f1fa8c; }
+        .json-bool { color: #bd93f9; }
+        
+        /* Docs Grid */
+        .docs-section { max-width: 1100px; margin: 0 auto 100px; padding: 0 20px; }
+        .docs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .doc-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 16px;
+            transition: 0.3s;
+        }
+        .doc-card:hover { border-color: var(--brand); background: rgba(255,255,255,0.04); }
+        .badge-get { color: #50fa7b; font-size: 12px; font-weight: 700; margin-bottom: 10px; display: block; }
+        .doc-card h3 { margin-bottom: 10px; font-size: 1.2rem; }
+        .doc-card p { color: var(--text-muted); font-size: 0.95rem; }
 
-        /* --- Footer --- */
+        /* Footer */
         footer {
             border-top: 1px solid var(--border);
-            padding: 100px 20px;
+            padding: 60px 20px;
             text-align: center;
-            margin-top: 100px;
         }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-links a {
-            color: var(--text-dim);
-            text-decoration: none;
-            transition: 0.3s;
-            font-weight: 500;
-        }
-
-        .footer-links a:hover { color: #fff; }
-
-        .credit {
-            color: var(--text-dim);
-            font-size: 1rem;
-        }
-
-        .credit a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 700;
-            position: relative;
-        }
-
-        .credit a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px; left: 0; width: 0; height: 2px;
-            background: var(--primary);
-            transition: 0.3s;
-        }
-        .credit a:hover::after { width: 100%; }
+        .footer-links { margin-bottom: 20px; display: flex; justify-content: center; gap: 30px; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 14px; }
+        .footer-links a:hover { color: var(--brand); }
+        .copyright { color: #444; font-size: 13px; }
+        .site-link { color: var(--brand); text-decoration: none; font-weight: 700; }
 
         @media (max-width: 768px) {
-            .try-grid { justify-content: center; }
-            h1 { font-size: 2.8rem; }
+            h1 { font-size: 3rem; }
+            nav { padding: 20px; }
         }
     </style>
 </head>
 <body>
+    <div class="bg-glow"></div>
+
+    <nav>
+        <div class="logo"><span>API</span> Hari Libur</div>
+        <div class="nav-links">
+            <a href="https://github.com/radyakaze/api-hari-libur" style="color:white; text-decoration:none; font-size:14px; font-weight:600;">GitHub</a>
+        </div>
+    </nav>
 
     <header>
-        <span class="badge-new">Indonesian Holiday API</span>
-        <h1>Developer portal.</h1>
-        <p class="hero-desc">Data hari libur nasional Indonesia terlengkap. Gratis, Open Source, dan selalu up-to-date untuk kebutuhan aplikasi Anda.</p>
-        <a href="#docs" class="btn-api active" style="text-decoration: none; padding: 12px 30px;">Mulai Integrasi</a>
+        <div class="announcement">Official Indonesian Holiday API</div>
+        <h1>Membangun aplikasi <br><span>tanpa pusing</span> tanggal merah.</h1>
+        <p class="hero-desc">Data Libur Nasional & Cuti Bersama Indonesia tercepat. Tanpa registrasi, tanpa API Key, 100% Gratis.</p>
     </header>
 
-    <div class="playground-container">
-        <div class="terminal">
-            <div class="terminal-header">
-                <div class="dots">
-                    <div class="dot red"></div>
-                    <div class="dot yellow"></div>
-                    <div class="dot green"></div>
-                </div>
-                <div class="terminal-tab">request.sh</div>
+    <section class="playground">
+        <div class="window">
+            <div class="window-header">
+                <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+                <div class="address-bar" id="current-url">https://api.domain.com/api</div>
             </div>
-            <div class="terminal-body">
-                <div class="try-grid">
-                    <button class="btn-api active" data-endpoint="/api">GET /all</button>
-                    <button class="btn-api" data-endpoint="/api?year=2024">GET /2024</button>
-                    <button class="btn-api" data-endpoint="/api?month=12">GET /Dec</button>
-                    <button class="btn-api" data-endpoint="/api/today">GET /today</button>
+            <div class="window-body">
+                <div class="tabs">
+                    <button class="tab-btn active" data-path="/api">Semua Libur (2025)</button>
+                    <button class="tab-btn" data-path="/api?month=8">Agustus</button>
+                    <button class="tab-btn" data-path="/api/today">Hari Ini</button>
+                    <button class="tab-btn" data-path="/api/tomorrow">Besok</button>
                 </div>
-                <div class="url-bar">
-                    <code id="display-url">Loading...</code>
-                </div>
-                <div class="response-area" id="response-box">
-                    <div class="status-line">// Ready to fetch...</div>
+                <div class="response-container" id="json-output">
+                    // Loading data from API...
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <section class="content-section" id="docs">
-        <h2 class="section-title">Dokumentasi API</h2>
-        <div class="card-grid">
+    <section class="docs-section">
+        <div class="docs-grid">
             <div class="doc-card">
-                <span class="method">GET</span>
-                <h3>Daftar Libur</h3>
-                <code class="path">/api</code>
-                <p style="color: var(--text-dim)">Mengembalikan array objek berisi seluruh tanggal merah dan cuti bersama di tahun berjalan.</p>
+                <span class="badge-get">GET</span>
+                <h3>Daftar Lengkap</h3>
+                <p>Mengambil seluruh data hari libur di tahun berjalan. Data diupdate otomatis sesuai SKB Pemerintah.</p>
             </div>
             <div class="doc-card">
-                <span class="method">GET</span>
-                <h3>Filter Spesifik</h3>
-                <code class="path">/api?year=2025&month=1</code>
-                <p style="color: var(--text-dim)">Mendukung query parameter untuk tahun (year) dan bulan (month) secara fleksibel.</p>
+                <span class="badge-get">GET</span>
+                <h3>Parameter Tahun</h3>
+                <p>Tambahkan query <code style="color:var(--brand)">?year=2024</code> untuk mengakses arsip data tahun-tahun sebelumnya.</p>
             </div>
             <div class="doc-card">
-                <span class="method">GET</span>
-                <h3>Validasi Cepat</h3>
-                <code class="path">/api/today</code>
-                <p style="color: var(--text-dim)">Endpoint khusus untuk pengecekan status hari ini. Sangat berguna untuk sistem absensi.</p>
+                <span class="badge-get">GET</span>
+                <h3>Pengecekan Boolean</h3>
+                <p>Gunakan endpoint <code style="color:var(--brand)">/today</code> untuk mendapatkan status TRUE/FALSE secara instan.</p>
             </div>
         </div>
     </section>
 
     <footer>
         <div class="footer-links">
-            <a href="https://github.com/radyakaze/api-hari-libur">GitHub</a>
-            <a href="https://github.com/radyakaze/api-hari-libur/issues">Support</a>
+            <a href="https://github.com/radyakaze/api-hari-libur">Dokumentasi GitHub</a>
+            <a href="https://github.com/radyakaze/api-hari-libur/issues">Lapor Bug</a>
         </div>
-        <p class="credit">
-            Dikelola oleh <a href="https://github.com/radyakaze" target="_blank">Radyakaze</a>. 
-            Data oleh <a href="https://tanggalans.id/" target="_blank">Tanggalans.id</a>
-        </p>
-        <p style="margin-top: 24px; font-size: 0.85rem; color: var(--text-dim); opacity: 0.6;">
-            &copy; <span id="year"></span> API Hari Libur Indonesia. Licensed under MIT.
+        <p class="copyright">
+            Maintained by <a href="https://github.com/radyakaze" class="site-link">Radyakaze</a>. 
+            Supported by <a href="https://tanggalans.id/" class="site-link" target="_blank">Tanggalans.id</a>
         </p>
     </footer>
 
     <script>
-        // 1. URL CONFIGURATION
-        // If testing locally (file://), it will try to fetch from your production URL
-        // If hosted on your server, it uses the current domain
-        const PROD_URL = "https://api-hari-libur.deno.dev"; // Ganti dengan URL API Anda jika berbeda
-        const BASE_URL = (window.location.protocol === 'file:') ? PROD_URL : window.location.origin;
+        /** 
+         * IMPORTANT: CHANGE THIS URL
+         * Ganti URL di bawah ini dengan URL Deno Deploy kamu yang asli.
+         * Contoh: https://my-holiday-api.deno.dev
+         */
+        const API_BASE = "https://api-hari-libur.deno.dev"; 
 
-        document.getElementById('year').textContent = new Date().getFullYear();
+        const jsonOutput = document.getElementById('json-output');
+        const currentUrlDisplay = document.getElementById('current-url');
+        const tabBtns = document.querySelectorAll('.tab-btn');
 
-        const btns = document.querySelectorAll('.btn-api');
-        const displayUrl = document.getElementById('display-url');
-        const responseBox = document.getElementById('response-box');
+        async function fetchApi(path) {
+            const fullUrl = API_BASE + path;
+            currentUrlDisplay.textContent = fullUrl;
+            jsonOutput.innerHTML = `<span style="color: #666">// Sedang memanggil ${path}...</span>`;
 
-        async function fetchPreview(endpoint) {
-            const fullUrl = BASE_URL + endpoint;
-            displayUrl.textContent = fullUrl;
-            
-            responseBox.innerHTML = `<div class="status-line">// Fetching from ${endpoint}...</div>`;
-            
             try {
-                const startTime = performance.now();
-                const res = await fetch(fullUrl);
-                const endTime = performance.now();
-                const duration = Math.round(endTime - startTime);
+                const response = await fetch(fullUrl, {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' }
+                });
 
-                if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
+                if (!response.ok) throw new Error(`Status: ${response.status}`);
                 
-                const data = await res.json();
+                const data = await response.json();
                 
-                responseBox.innerHTML = `
-                    <div class="status-line">
-                        <span class="status-200">● 200 OK</span> 
-                        <span style="margin-left:10px; font-weight:normal; opacity:0.5">${duration}ms</span>
-                    </div>
-                    <div>${JSON.stringify(data, null, 2)}</div>
-                `;
-            } catch (e) {
-                responseBox.innerHTML = `
-                    <div class="status-line status-error">● Error Connection</div>
-                    <div style="color: #fca5a5">
-// Gagal memuat data.
-// Penyebab: ${e.message}
-// Pastikan API server Anda sedang berjalan di:
-// ${BASE_URL}
-                    </div>
-                `;
+                // Pretty print and highlight
+                let jsonStr = JSON.stringify(data, null, 2);
+                jsonStr = jsonStr.replace(/"([^"]+)":/g, '<span class="json-key">"$1"</span>:');
+                jsonStr = jsonStr.replace(/: "([^"]+)"/g, ': <span class="json-val">"$1"</span>');
+                jsonStr = jsonStr.replace(/: (true|false)/g, ': <span class="json-bool">$1</span>');
+                
+                jsonOutput.innerHTML = jsonStr;
+
+            } catch (error) {
+                jsonOutput.innerHTML = `
+<span style="color: #ff5555">// ERROR CONNECTION</span>
+<span style="color: #888">
+Penyebab: ${error.message}
+
+1. Pastikan URL API sudah benar di file index.html (API_BASE).
+2. Pastikan API kamu di Deno sudah mengirimkan header CORS: 
+   <b>"Access-Control-Allow-Origin": "*"</b>
+</span>`;
             }
         }
 
-        btns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                // Ignore the 'Mulai Integrasi' button
-                if (this.getAttribute('href')) return;
-
-                btns.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                const path = this.getAttribute('data-endpoint');
-                fetchPreview(path);
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                fetchApi(btn.dataset.path);
             });
         });
 
-        // Initialize with default
-        fetchPreview('/api');
+        // Start with default
+        fetchApi('/api');
     </script>
 </body>
 </html>
